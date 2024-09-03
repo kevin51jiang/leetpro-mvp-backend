@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./public:/app/public
+    environment:
+      - PYTHONUNBUFFERED=1
+      - QUART_APP=api:app
+      - QUART_ENV=production
