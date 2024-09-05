@@ -23,9 +23,9 @@ openai_client = AsyncOpenAI(
 )
 
 
-async def get_txt2txt_completion(messages: List[Dict[str, str]]) -> str:
+async def get_txt2txt_completion(messages: List[Dict[str, str]], model: str = "openai/gpt-4o-2024-08-06") -> str:
     chat_completion = await openai_client.chat.completions.create(
-        model="cohere/command-r-plus-08-2024",
+        model=model,
         messages=messages,
     )
     print("OpenAI completion done")
@@ -36,6 +36,9 @@ async def get_txt2txt_completion(messages: List[Dict[str, str]]) -> str:
     except Exception as e:
         print("Error getting completion", e)
         return ""
+    
+
+
 
 
 default_conversation_overall_analysis = ConversationOverallAnalysis(
@@ -215,6 +218,8 @@ async def analyze_conversation(
     conversation: Conversation,
 ) -> ConversationOverallAnalysis:
 
+
+    analysis_model = "cohere/command-r-plus-08-2024"
     # Make a copy of default_conversation_overall_analysis
     conversation_overall_analysis = deepcopy(default_conversation_overall_analysis)
 
@@ -252,7 +257,7 @@ async def analyze_conversation(
 
         print("messages", messages)
         # Get the LLM's analysis
-        analysis_result = await get_txt2txt_completion(messages)
+        analysis_result = await get_txt2txt_completion(messages, model=analysis_model)
         print("analysis_result", analysis_result)
 
         # Parse the result (assuming the LLM returns the verdict in the first line and justification after)
@@ -305,7 +310,8 @@ async def analyze_conversation(
     ]
 
     conversation_overall_analysis.overall_feedback = await get_txt2txt_completion(
-        messages
+        messages,
+        model=analysis_model,
     )
 
     return conversation_overall_analysis
