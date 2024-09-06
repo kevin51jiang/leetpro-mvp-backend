@@ -35,4 +35,7 @@ ENV PYTHONUNBUFFERED=1
 ENV QUART_APP=api
 ENV QUART_ENV=production
 
-CMD ["poetry", "run", "uvicorn", "src.api:app", "--port", "5000"]
+# Expose port 8000
+EXPOSE 8000/tcp
+
+CMD ["poetry", "run", "uvicorn", "src.api:app"]
