@@ -11,14 +11,15 @@ ENV PATH="/root/.local/bin:$PATH"
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the pyproject.toml and poetry.lock files into the container
-COPY pyproject.toml poetry.lock ./
+# # Copy the pyproject.toml and poetry.lock files into the container
+# COPY pyproject.toml poetry.lock ./
+
+# Copy the rest of the application code
+COPY . .
 
 # Install the project dependencies
 RUN poetry install --no-interaction --no-ansi
 
-# Copy the rest of the application code
-COPY . .
 
 # Create directories for persisting files
 RUN mkdir -p public/vo public/speech_in public/analyze
@@ -34,6 +35,4 @@ ENV PYTHONUNBUFFERED=1
 ENV QUART_APP=api
 ENV QUART_ENV=production
 
-
-# # Run the application
 CMD ["poetry", "run", "uvicorn", "src.api:app", "--port", "5000"]
