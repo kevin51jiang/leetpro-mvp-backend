@@ -28,7 +28,7 @@ RUN mkdir -p public/vo public/speech_in public/analyze
 RUN chmod -R 777 public/vo public/speech_in public/analyze
 
 # Expose the port the app runs on
-EXPOSE 5000
+EXPOSE 8000
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
