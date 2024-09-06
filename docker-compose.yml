@@ -5,10 +5,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    # ports:
-    #   - "8000:8000"
+    ports:
+      - "5000:5000"
     volumes:
       - ./public:/app/public
-    network_mode: host
+    networks:
+      - leetpro
+
+networks:
+  leetpro:
+    driver: bridge
 
 
