@@ -21,8 +21,11 @@ RUN poetry config virtualenvs.create false \
 # Copy the rest of the application code
 COPY . .
 
-# Create directories for audio files
-RUN mkdir -p public/vo public/speech_in
+# Create directories for persisting files
+RUN mkdir -p public/vo public/speech_in public/analyze
+
+# Make these directories writable by the application
+RUN chmod -R 777 public/vo public/speech_in public/analyze
 
 # Expose the port the app runs on
 EXPOSE 5000
@@ -33,4 +36,4 @@ ENV QUART_APP=api
 ENV QUART_ENV=production
 
 # Run the application
-CMD ["poetry", "run", "hypercorn", "api", "--bind", "0.0.0.0:5000"]
+CMD ["poetry", "run", "hypercorn", "src.api", "--bind", "0.0.0.0:5000"]
