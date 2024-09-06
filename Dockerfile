@@ -36,6 +36,6 @@ ENV QUART_APP=api
 ENV QUART_ENV=production
 
 # Expose port 8000
-EXPOSE 8000/tcp
+EXPOSE 8000
 
 CMD ["poetry", "run", "uvicorn", "src.api:app"]
