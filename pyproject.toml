@@ -16,10 +16,10 @@ openai = "^1.43.0"
 uuid7 = "^0.1.0"
 deepgram-sdk = "^3.5.1"
 hypercorn = "^0.17.3"
+uvicorn = "^0.30.6"
 
 [tool.poetry.scripts]
 start = "api:run"
-
 
 
 

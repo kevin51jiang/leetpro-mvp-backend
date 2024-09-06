@@ -15,8 +15,7 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock ./
 
 # Install the project dependencies
-RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi
+RUN poetry install --no-interaction --no-ansi
 
 # Copy the rest of the application code
 COPY . .
@@ -35,5 +34,6 @@ ENV PYTHONUNBUFFERED=1
 ENV QUART_APP=api
 ENV QUART_ENV=production
 
-# Run the application
-CMD ["poetry", "run", "hypercorn", "src.api", "--bind", "0.0.0.0:5000"]
+
+# # Run the application
+CMD ["poetry", "run", "uvicorn", "src.api:app", "--port", "5000"]

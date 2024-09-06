@@ -9,6 +9,7 @@ from datetime import datetime
 from dataclasses import dataclass
 
 from dotenv import load_dotenv
+import uvicorn
 from quart import Quart, Response, send_from_directory
 from quart_cors import cors
 from quart_schema import QuartSchema, DataSource, validate_request, validate_response
@@ -168,5 +169,14 @@ def run() -> None:
     app.run()
 
 
-if __name__ == "__main__":
-    app.run(use_reloader=True)
+# async def run_prod() -> None:
+#     """Run the Quart application in production mode."""
+#     config = uvicorn.Config("main:app", port=5000, log_level="info")
+#     server = uvicorn.Server(config)
+#     await server.serve()
+
+
+# if __name__ == "__main__":
+#     config = uvicorn.Config("src.api:app", port=5000, log_level="info")
+#     server = uvicorn.Server(config)
+#     server.run()
