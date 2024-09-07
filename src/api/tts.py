@@ -147,4 +147,5 @@ async def generate_tts(speaker: str, text: str, id: str) -> None:
         text (str): The text to convert to speech.
         id (str): Unique identifier for the generated audio file.
     """
-    await generate_tts_rime(speaker=speaker, text=clean_tts_text(text), id=id)
+    # await generate_tts_rime(speaker=speaker, text=clean_tts_text(text), id=id)
+    await generate_tts_deepgram(text=clean_tts_text(text), id=id)

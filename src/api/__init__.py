@@ -42,8 +42,6 @@ app = cors(
 )
 QuartSchema(app)
 
-ROOT_URL = os.environ.get("ROOT_URL")
-
 # Route definitions
 
 
@@ -124,20 +122,22 @@ async def transcribe(data: TranscribeInput) -> TranscribeOutput:
 @validate_response(ChatOutput)
 async def chat(data: ChatInput) -> ChatOutput:
     """Process chat input and generate response."""
+    
     messages = [
         {"role": msg.role, "content": msg.content} for msg in data.conversation.messages
     ]
     res = await get_txt2txt_completion(messages)
 
     vo_id = generate_uuid()
-    if not res:
-        return ChatOutput(content="", vo_id="", timestamp=datetime.now(), id=vo_id)
+    if not res or res == "":
+        return ChatOutput(content="", vo_id="", timestamp=datetime.now(), id='')
 
     await generate_tts(speaker="joy", text=res, id=vo_id)
 
+
     return ChatOutput(
         content=res,
-        vo_id=f"{ROOT_URL}/vo/{vo_id}.wav",
+        vo_id=f"vo/{vo_id}.wav",
         timestamp=datetime.now(),
         id=vo_id,
     )

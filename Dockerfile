@@ -27,8 +27,6 @@ RUN mkdir -p public/vo public/speech_in public/analyze
 # Make these directories writable by the application
 RUN chmod -R 777 public/vo public/speech_in public/analyze
 
-# Expose the port the app runs on
-EXPOSE 8000
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
@@ -37,6 +35,7 @@ ENV QUART_ENV=production
 
 # Expose port 8000
 EXPOSE 5000
+EXPOSE 8000
 
 # CMD ["poetry", "run", "uvicorn", "src.api:app"]
 CMD ["poetry", "run", "start"]
